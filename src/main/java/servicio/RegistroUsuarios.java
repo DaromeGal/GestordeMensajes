@@ -8,20 +8,21 @@ public class RegistroUsuarios {
 
     public static Usuario[] usuarios = new Usuario[Canal.MAX_USUARIOS];
 
-    public static boolean altaUsuario(Usuario u) {
-        if (Usuario.contadorUsuarios >= Canal.MAX_USUARIOS) {
-            return false;
+    public static void altaUsuario(Usuario u){
+        if (!isEmailRepited(u)){
+            if(Usuario.getContadorUsuarios()<Canal.MAX_USUARIOS){
+                usuarios[Usuario.getContadorUsuarios()]=u;
+                Usuario.incrementarUsuarios();
+            }else{
+                System.out.println("No hay espacio para nuevos usuarios");
+            }
+
+        }else{
+            System.out.println("El usuario ya se encuentra registrado");
         }
 
-        for (int i = 0; i < Usuario.getContadorUsuarios(); i++) {
-            if (usuarios[i] != null && usuarios[i].getEmail().equalsIgnoreCase(u.getEmail())) {
-                return false;
-            }
-        }
-        usuarios[Usuario.contadorUsuarios] = u;
-        Usuario.contadorUsuarios++;
-        return true;
     }
+
 
     public static Usuario buscarPorEmail(String email) {
         for (int i = 0; i < Usuario.contadorUsuarios; i++) {
@@ -32,15 +33,35 @@ public class RegistroUsuarios {
         return null;
     }
 
-    public static Usuario[] listar() {
+    public static boolean isEmailRepited(Usuario usuario){
+        for(int i=0;i<Canal.MAX_USUARIOS;i++){
+            if(usuarios[i]!=null){
+                if(usuarios[i].getEmail().equals(usuario.getEmail())){
+                    return true;
+                }
 
-        Usuario [] usuariosRegistrados= new Usuario[Usuario.getContadorUsuarios()];
-        for (int i = 0; i< Usuario.getContadorUsuarios(); i++) {
-            usuariosRegistrados[i] = usuarios[i];
+            }
         }
-            return usuariosRegistrados;
-
+        return false;
     }
+
+    public static Usuario[] listar(){
+        Usuario [] usuariosRegistrados=new Usuario[Usuario.getContadorUsuarios()];
+        for(int i=0;i<Usuario.getContadorUsuarios(); i++){
+            usuariosRegistrados[i]=usuarios[i];
+        }
+        return usuariosRegistrados;
+    }
+
+    public static int getTotalUsuarios()
+    {
+        return Usuario.getContadorUsuarios();
+    }
+
+
+
+
+
 
 }
 

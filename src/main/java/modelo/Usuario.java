@@ -5,9 +5,12 @@ public class Usuario {
     private String email;
     public static int contadorUsuarios=0;
     public Usuario(String nombre, String email) {
-        this.nombre=nombre;
-        this.email=email;
-        contadorUsuarios++;
+        this.nombre = nombre;
+        this.email = email;
+
+
+
+
     }
 
     public String getNombre() {
@@ -25,6 +28,11 @@ public class Usuario {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public static void incrementarUsuarios(){
+        contadorUsuarios++;
+    }
+
     public static int getContadorUsuarios(){
         return contadorUsuarios;
     }
